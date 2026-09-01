@@ -68,11 +68,25 @@
   var formWasSubmitted = false;
 
   if (form && frame) {
-    form.addEventListener("submit", function () {
+    form.addEventListener("submit", function (event) {
+      // novalidate is on the <form> so the browser doesn't do a plain
+      // page-reload-style validation failure — but we still want the
+      // native required-field checks (a <select> stuck on its disabled
+      // placeholder, an empty required input, etc). Without this, a
+      // half-filled form silently submits an incomplete request that
+      // Google rejects, while the page still claims success. Do the
+      // check ourselves and stop right here if anything's missing.
+      if (!form.checkValidity()) {
+        event.preventDefault();
+        form.reportValidity();
+        return;
+      }
+
       formWasSubmitted = true;
       var submitBtn = form.querySelector(".btn-submit");
       if (submitBtn) submitBtn.textContent = "Sending…";
-      // No preventDefault — let the browser submit normally into the iframe.
+      // No preventDefault beyond the check above — let the browser
+      // submit normally into the iframe.
     });
 
     frame.addEventListener("load", function () {
