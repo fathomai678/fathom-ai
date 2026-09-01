@@ -1,0 +1,471 @@
+/* ============================================================
+   FATHOM AI — style.css
+   One file, mobile-first. See README.md for how pieces connect.
+   ============================================================ */
+
+:root {
+  --ink: #0B1B2B;
+  --paper: #F6F8FA;
+  --signal: #2E74B5;
+  --deep: #14385C;
+  --shoal: #DEEAF6;
+  --sounding: #C81E78;
+
+  --gray-2: #5A6B7C;
+  --gray-3: #97A6B4;
+
+  --font-display: 'Archivo', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-body: 'Source Sans 3', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  --gutter-x-mobile: 18px;
+  --gutter-x-desktop: 48px;
+
+  --max-w: 780px;
+}
+
+/* ---------- reset ---------- */
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+img, svg { display: block; max-width: 100%; }
+a { color: var(--signal); text-decoration: none; }
+ul, ol { margin: 0; padding: 0; }
+button { font: inherit; }
+
+/* ---------- skip link ---------- */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--deep);
+  color: var(--paper);
+  padding: 10px 16px;
+  z-index: 100;
+}
+.skip-link:focus {
+  left: 8px;
+  top: 8px;
+}
+
+/* ---------- focus ---------- */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 2px;
+}
+
+/* ---------- type ---------- */
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--deep);
+  margin: 0;
+}
+h1 { font-size: 34px; line-height: 1.05; }
+h2.section-title { font-size: 28px; line-height: 1.2; margin-bottom: 8px; }
+h3.block-head { font-size: 20px; line-height: 1.3; }
+
+.section-sub {
+  color: var(--gray-2);
+  max-width: 42ch;
+  margin: 0 0 28px;
+}
+
+p { max-width: 68ch; }
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+/* ---------- layout shell ---------- */
+.page {
+  position: relative;
+}
+
+.depth-rule {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--gutter-x-mobile);
+  width: 2px;
+  background: var(--shoal);
+  z-index: 0;
+}
+
+.depth-section {
+  position: relative;
+  padding: 56px 24px 56px calc(var(--gutter-x-mobile) + 24px);
+}
+
+.depth-mark {
+  position: absolute;
+  left: var(--gutter-x-mobile);
+  top: 58px;
+  display: flex;
+  align-items: center;
+  transform: translateX(-1px);
+}
+.depth-tick {
+  width: 12px;
+  height: 2px;
+  background: var(--sounding);
+  display: block;
+}
+.depth-label {
+  display: none; /* mobile: ticks only, no labels — see spec 2.4 */
+}
+
+@media (min-width: 1024px) {
+  .depth-rule { left: var(--gutter-x-desktop); }
+  .depth-section {
+    padding-left: calc(var(--gutter-x-desktop) + 92px);
+    padding-right: 48px;
+  }
+  .depth-mark { left: var(--gutter-x-desktop); }
+  .depth-label {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: var(--sounding);
+    margin-left: 14px;
+    opacity: 0.55;
+    transition: opacity 0.3s ease;
+  }
+  .depth-mark.is-active .depth-label { opacity: 1; }
+}
+
+/* ---------- top nav ---------- */
+.topnav {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px;
+}
+.topnav-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--deep);
+}
+.topnav-mark { width: 22px; height: 22px; color: var(--deep); }
+.topnav-word {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  color: var(--deep);
+}
+.topnav-links {
+  display: none;
+  align-items: center;
+  gap: 24px;
+  font-size: 14px;
+  color: var(--deep);
+}
+.topnav-links a { color: var(--deep); }
+.topnav-links a:hover { color: var(--signal); }
+.topnav-cta {
+  background: var(--sounding);
+  color: var(--paper) !important;
+  padding: 8px 16px;
+  border-radius: 3px;
+}
+.topnav-cta:hover { background: #a91763; }
+
+@media (min-width: 1024px) {
+  .topnav { padding: 24px 48px; }
+  .topnav-links { display: flex; }
+}
+
+/* ---------- hero ---------- */
+.hero {
+  padding-top: 32px;
+  padding-bottom: 72px;
+  overflow: hidden;
+}
+.hero-inner {
+  position: relative;
+  z-index: 1;
+  max-width: var(--max-w);
+}
+.hero-mark {
+  width: 40px;
+  height: 40px;
+  color: var(--deep);
+  margin-bottom: 20px;
+}
+.hero-word {
+  font-size: 34px;
+}
+.hero-tagline {
+  font-family: var(--font-body);
+  font-size: 18px;
+  color: var(--ink);
+  margin: 10px 0 4px;
+}
+.hero-loc {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gray-2); /* gray-3 fails 4.5:1 on paper at this size */
+  margin: 0 0 28px;
+}
+
+@media (min-width: 1024px) {
+  .hero { padding-top: 40px; padding-bottom: 100px; }
+  .hero-mark { width: 52px; height: 52px; }
+  .hero-word { font-size: 60px; }
+  .hero-tagline { font-size: 22px; }
+}
+
+/* ---------- contour motif ---------- */
+.contour {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.55;
+}
+.contour--footer { opacity: 0.4; }
+
+.contour-divider {
+  position: relative;
+  height: 56px;
+  overflow: hidden;
+  opacity: 0.5;
+}
+.contour-divider svg {
+  position: absolute;
+  left: 0;
+  top: -90px;
+  width: 100%;
+  height: 260px;
+}
+
+/* ---------- what we do ---------- */
+.block-grid {
+  display: grid;
+  gap: 28px;
+  max-width: var(--max-w);
+}
+.block-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.10em;
+  color: var(--signal);
+  margin: 0 0 6px;
+}
+.block-body {
+  color: var(--gray-2);
+  margin: 8px 0 0;
+}
+
+@media (min-width: 640px) {
+  .block-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ---------- what you get ---------- */
+.check-list {
+  list-style: none;
+  max-width: var(--max-w);
+}
+.check-list li {
+  position: relative;
+  padding: 14px 0 14px 26px;
+  border-top: 1px solid var(--shoal);
+  font-size: 16px;
+}
+.check-list li:last-child { border-bottom: 1px solid var(--shoal); }
+.check-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 22px;
+  width: 8px;
+  height: 8px;
+  border: 1.5px solid var(--signal);
+  border-radius: 50%;
+}
+
+/* ---------- integrity ---------- */
+.integrity-list {
+  max-width: var(--max-w);
+  counter-reset: item;
+  list-style: none;
+}
+.integrity-list li {
+  counter-increment: item;
+  position: relative;
+  padding: 14px 0 14px 40px;
+  border-top: 1px solid var(--shoal);
+}
+.integrity-list li:last-child { border-bottom: 1px solid var(--shoal); }
+.integrity-list li::before {
+  content: counter(item);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--signal);
+  position: absolute;
+  left: 0;
+  top: 15px;
+  width: 22px;
+}
+
+/* ---------- buttons ---------- */
+.btn {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 16px;
+  padding: 14px 26px;
+  border-radius: 3px;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+}
+.btn-primary {
+  background: var(--sounding);
+  color: var(--paper);
+}
+.btn-primary:hover { background: #a91763; }
+
+/* ---------- form ---------- */
+#join-form {
+  max-width: var(--max-w);
+  display: grid;
+  gap: 20px;
+}
+.field { display: grid; gap: 6px; }
+.field label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--gray-2);
+}
+.field input,
+.field select {
+  font-family: var(--font-body);
+  font-size: 16px;
+  padding: 12px 14px;
+  border: 1px solid var(--gray-2); /* gray-3 fails the 3:1 UI-boundary floor */
+  border-radius: 3px;
+  background: #fff;
+  color: var(--ink);
+}
+.btn-submit { justify-self: start; margin-top: 8px; }
+
+/* the form submits into this — see index.html for why */
+.hidden-frame {
+  display: none;
+}
+
+.noscript-note {
+  margin-top: 12px;
+  font-size: 14px;
+  color: var(--gray-2);
+}
+
+/* confirmation panel — hidden by default. script.js reveals it once the
+   hidden iframe reports the submission finished loading (see script.js). */
+.confirm-panel {
+  max-width: var(--max-w);
+  display: none;
+}
+.confirm-panel p { color: var(--ink); font-size: 18px; }
+.confirm-panel .btn { margin-top: 12px; }
+
+/* ---------- footer ---------- */
+.site-footer {
+  padding: 48px 24px 96px calc(var(--gutter-x-mobile) + 24px);
+  border-top: 1px solid var(--shoal);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+}
+.footer-org {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--gray-2);
+  margin: 0;
+}
+.footer-discord {
+  font-size: 14px;
+  color: var(--signal);
+}
+
+@media (min-width: 1024px) {
+  .site-footer { padding-left: calc(var(--gutter-x-desktop) + 92px); padding-bottom: 64px; }
+}
+
+/* ---------- mobile sticky join bar ---------- */
+.mobile-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+  padding: 12px 16px;
+  background: var(--paper);
+  border-top: 1px solid var(--shoal);
+}
+.mobile-bar .btn {
+  display: block;
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .mobile-bar { display: none; }
+  body { padding-bottom: 0; }
+}
+@media (max-width: 1023px) {
+  body { padding-bottom: 72px; } /* clears the sticky bar */
+}
+
+/* ---------- motion: fade-and-rise, 200ms, 12px — the entire budget ----------
+   Default state (no JS) is fully visible — content must never depend on
+   script to appear. script.js adds .js to <html>, which is what arms the
+   scroll-in animation. */
+.reveal {
+  opacity: 1;
+  transform: none;
+}
+.js .reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.js .reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .depth-label { transition: none; }
+}
