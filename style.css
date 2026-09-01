@@ -395,6 +395,16 @@ p { max-width: 68ch; }
 .confirm-panel p { color: var(--ink); font-size: 18px; }
 .confirm-panel .btn { margin-top: 12px; }
 
+.leadership-note {
+  max-width: var(--max-w);
+  margin-top: 32px;
+  font-size: 14px;
+  color: var(--gray-2);
+}
+.leadership-note a {
+  color: var(--signal);
+}
+
 /* ---------- footer ---------- */
 .site-footer {
   padding: 48px 24px 96px calc(var(--gutter-x-mobile) + 24px);
